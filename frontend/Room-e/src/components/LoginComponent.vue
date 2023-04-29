@@ -21,6 +21,7 @@ const displayError = ref(false);
 const authUser = async () => {
     try {
         // Authenticate the user via email and password
+        console.log("the data are: " , email.value, password.value);
         const userData = await pocketBase.collection("users").authWithPassword(email.value, password.value);
 
         if (userData) {
@@ -31,6 +32,7 @@ const authUser = async () => {
             router.push({ path: "/rooms" })
         }
     } catch (error) {
+        console.log("sdas");
         displayError.value = true;
     }
 }
@@ -48,11 +50,11 @@ const authUser = async () => {
                 <h2 class="text-white text-lg font-medium title-font mb-5">Sign in</h2>
                 <div class="relative mb-4">
                     <label for="email" class="leading-7 text-sm text-gray-400">Email</label>
-                    <input type="email" id="email" name="email" :value="email" class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-pink-900 rounded border border-gray-600 focus:border-pink-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="email" id="email" name="email" v-model="email" class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-pink-900 rounded border border-gray-600 focus:border-pink-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 </div>
                 <div class="relative mb-4">
                     <label for="password" class="leading-7 text-sm text-gray-400">Password</label>
-                    <input type="password" id="password" name="password" :value="password" class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-pink-900 rounded border border-gray-600 focus:border-pink-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="password" id="password" name="password" v-model="password" class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-pink-900 rounded border border-gray-600 focus:border-pink-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 </div>
                 <button class="text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg" type="submit">Sign in</button>
                 <p class="text-xs mt-3">You don't have an account? Please <router-link to="signup" class="text-pink-500">Sign up</router-link></p> 

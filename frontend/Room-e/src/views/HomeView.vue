@@ -1,9 +1,9 @@
 <script setup>
-import LoginComponent from "@/components/LoginComponent.vue";
+import skeletonComponent from '@/components/common/skeletonComponent.vue';
 </script>
 
 <template>
   <div>
-    <LoginComponent />
+    <skeletonComponent />
   </div>
 </template>
