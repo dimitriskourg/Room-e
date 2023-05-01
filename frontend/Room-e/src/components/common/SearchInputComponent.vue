@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-6xl mx-2 xl:mx-auto my-2 h-13 relative md:block hidden">
+  <div class="max-w-6xl mx-2 xl:mx-auto my-2 h-13 md:block hidden sticky">
     <div class="relative">
       <!-- Categories Dropdown -->
       <div class="absolute top-full left-0 right-1 transform -translate-y-11 flex items-center pl-1 z-10 sm:max-w-fit">
@@ -12,11 +12,11 @@
       
       <!-- Search Input -->
       <div class="relative">
-        <label for="UserEmail" class="sr-only"> Email </label>
+        <label for="roomSearch" class="sr-only"> Email </label>
 
         <input
           type="text"
-          id="UserEmail"
+          id="roomSearch"
           v-model="searchedRoomInput"
           placeholder="Search for a Room"
           class="w-full rounded-md border-gray-200 pe-10 pl-100 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-sm md:text-lg py-3"
@@ -34,13 +34,13 @@
   </div>
 
   <!-- Mobile Search Input -->
-  <div class="md:hidden block mt-2">
+  <div class="md:hidden block mt-2 sticky">
       <div class="relative mx-2">
-        <label for="UserEmail" class="sr-only"> Room Name </label>
+        <label for="roomSearch" class="sr-only"> Room Name </label>
 
         <input
           type="text"
-          id="UserEmail"
+          id="roomSearch"
           placeholder="Search for a Room"
           v-model="searchedRoomInput"
           class="w-full rounded-md border-gray-200 pe-10 pl-1 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-sm md:text-lg py-3"
@@ -58,7 +58,7 @@
       <div class="mx-2 flex pt-1">
         <!-- Categories Dropdown -->
         <div class="w-3/5  mr-1">
-          <DropDownComponent :title="title" class="rounded border border-gray-300 dark:border-gray-600"/>
+          <DropDownComponent :title="title" class="rounded border border-gray-300 dark:border-gray-600 py-0.5 dark:bg-gray-800"/>
         </div>
         <!-- Datepicker Component -->
         <div class="w-2/5">
