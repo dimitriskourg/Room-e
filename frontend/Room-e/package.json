@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
@@ -14,7 +14,8 @@
     "pinia": "^2.0.32",
     "pocketbase": "^0.14.3",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue-tailwind-datepicker": "^1.4.3"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

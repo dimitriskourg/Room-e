@@ -29,10 +29,11 @@ const authUser = async () => {
             userStore.userID = userData.record?.id;
             userStore.userName = userData.record?.username;
             userStore.type = userData.record?.collectionName;
+            console.log("the user is: ", pocketBase?.authStore.token);
             router.push({ path: "/rooms" })
         }
     } catch (error) {
-        console.log("sdas");
+        console.log(error);
         displayError.value = true;
     }
 }
@@ -40,8 +41,8 @@ const authUser = async () => {
 
 <template>
     <form @submit.prevent="authUser" >
-        <section class="text-gray-400 bg-gray-900 body-font">
-            <div class="container md:px-10 lg:px-20 py-60 mx-auto flex flex-wrap items-center">
+        <section class="text-gray-400 bg-gray-900 body-font mx-2 sm:mx-0">
+            <div class="container md:px-10 lg:px-20 xs:px-4 py-60 sm:mx-auto flex flex-wrap items-center">
                 <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
                 <h1 class="title-font font-medium text-3xl text-white">Room-e</h1>
                 <p class="leading-relaxed mt-4">#1 website to book rooms for multiple activities</p>
