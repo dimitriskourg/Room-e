@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "vtd-primary": colors.sky, // Light mode Datepicker color
+        "vtd-primary": colors.pink, // Light mode Datepicker color
         "vtd-secondary": colors.gray, // Dark mode Datepicker color
       },
       width: {
@@ -21,6 +21,8 @@ module.exports = {
       },
       screens: {
       'xs': '475px',
+      "3xl": "1600px",
+      "4xl": "1920px",
       ...defaultTheme.screens,
     },
     },

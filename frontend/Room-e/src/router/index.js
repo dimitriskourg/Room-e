@@ -3,25 +3,46 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/HomeView.vue'
 import SignInView from '../views/SignInView.vue'
 import SignUpView from '../views/SignUpView.vue'
+import RoomView from '../views/RoomView.vue'
+import { useLocalStorage } from '@vueuse/core'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
         meta: { requiresAuth: true },
+      created() {
+        const position = useLocalStorage('RoomieHomePosition', 0);
+        window.scrollTo(0, position);
+      },
       component: Home,
+      beforeRouteLeave(to, from, next) {
+        const position = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        useLocalStorage('RoomieHomePosition', position);
+        next();
+      }
     },
     {
       path: '/signup',
-      name: 'signup',
+      name: 'Sign Up',
       component: SignUpView,
     },
     {
       path: '/signin',
-      name: 'signin',
+      name: 'Sign In',
       component: SignInView,
+    },
+    {
+      path: '/rooms',
+      name: 'Rooms',
+      component: Home,
+    },
+    {
+      path: '/room/:id',
+      name: 'Room',
+      component: RoomView,
     },
     // {
     //   path: '/feed',
@@ -51,6 +72,7 @@ router.beforeEach((to) => {
       path: "/signin"
     }
   }
+  document.title = `${to.name} | Room-e`
 })
 
 export default router

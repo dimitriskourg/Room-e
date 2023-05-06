@@ -2,9 +2,20 @@ import client from '@/pocketbase'
 
 
 
-const getRooms = async (last) => {
+export const getRooms = async (last) => {
   const rooms = await client.collection('rooms').getList(last, 10);
-  console.log(rooms);
+  return rooms;
+}
+
+export const getRoom = async (id) => {
+  const room = await client.collection('rooms').getOne(id);
+  return room;
+}
+
+export const getSelectedRooms = async (selectedRooms) => {
+  const rooms = await client.collection("rooms").getFullList({
+    filter: selectedRooms.map((id) => `id!="${id}"`).join("&&"),
+  })
   return rooms;
 }
 

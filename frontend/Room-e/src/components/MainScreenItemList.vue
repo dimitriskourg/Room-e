@@ -4,38 +4,34 @@ import skeletonComponent from './common/skeletonComponent.vue';
 import skeletonsComponent from './common/SkeletonsComponent.vue';
 import getRooms from '../api/get-rooms';
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useRoomStore } from '../stores/rooms';
 
-const page = ref(1);
-const rooms = ref([]);
-const isLoading = ref(false);
-const isLastPage = ref(false);
+const roomStore = useRoomStore();
+
 const scrollComponent = ref(null);
-let timeoutId = null;
 const fetchRooms = async () => {
   //2 seconds delay
-  isLoading.value = true;
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  roomStore.isLoading = true;
+  await new Promise(resolve => setTimeout(resolve, 200));
   try {
-    const newRooms = await getRooms(page.value);
-    console.log("gfdgdsfg" , newRooms);
-    page.value += 1;
-    if(page.value > newRooms.totalPages + 1) {
+    const newRooms = await getRooms(roomStore.page);
+    roomStore.page += 1;
+    if(roomStore.page > newRooms.totalPages + 1) {
       window.removeEventListener('scroll', handleScroll);
-      isLoading.value = false;
-      isLastPage.value = true;
+      roomStore.isLoading = false;
+      roomStore.isLastPage = true;
       return;
     }
-    rooms.value = [...rooms.value, ...newRooms.items];
-    console.log(rooms.value);
-    console.log(page.value);
-    isLoading.value = false;
+    roomStore.rooms = [...roomStore.rooms, ...newRooms.items];
+    console.log(roomStore.page);
+    roomStore.isLoading = false;
   } catch (error) {
     console.log(error);
   }
 };
 
 const loadMore = async () => {
-  if(isLoading.value || isLastPage.value) return;
+  if(roomStore.isLoading || roomStore.isLastPage) return;
   await fetchRooms();
 };
 
@@ -57,14 +53,16 @@ onUnmounted(async() => {
 </script>
 
 <template>
-  <skeletonsComponent v-if="!rooms.length"/>
-  <div class="flex flex-wrap my-5 mx-4" ref="scrollComponent">
-    <MainScreenItem v-for="room in rooms" :key="room.id" :id="room.id" :name="room.name" :category="room.category" :photo="room.photo"/>
-  </div>
-  <skeletonComponent v-if="isLoading" />
-  <!-- No more rooms available  -->
-  <div v-if="isLastPage" class="flex justify-center items-center text-gray-500 text-sm py-4">
-    No more rooms available
+  <div>
+    <skeletonsComponent v-if="!roomStore.rooms.length"/>
+    <div class="flex flex-wrap my-5 mx-7 md:mx-14 lg:mx-28 2xl:mx-72 3xl:mx-96" ref="scrollComponent">
+      <MainScreenItem v-for="room in roomStore.filteredRooms" :key="room.id" :id="room.id" :name="room.name" :category="room.category" :photo="room.photo"/>
+    </div>
+    <skeletonComponent v-if="roomStore.isLoading" />
+    <!-- No more rooms available  -->
+    <div v-if="roomStore.isLastPage" class="flex justify-center items-center text-gray-500 text-sm py-4">
+      No more rooms available
+    </div>
   </div>
 </template>
 
