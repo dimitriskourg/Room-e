@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-6xl mx-2 xl:mx-auto my-4 h-13 md:block hidden sticky">
+  <div class="max-w-6xl mx-2 xl:mx-auto my-4 h-13 md:block hidden">
     <div class="relative">
       <!-- Categories Dropdown -->
       <div class="absolute top-full left-0 right-1 transform -translate-y-11 flex items-center pl-1 z-10 sm:max-w-fit">

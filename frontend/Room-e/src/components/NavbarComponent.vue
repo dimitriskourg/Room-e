@@ -14,7 +14,6 @@ const isAdmin = computed(() => {
 })
 
 const isUser = computed(() => {
-  console.log("fsadfsdfsdf", userStore.type);
   return userStore.type === 'users'
 })
 

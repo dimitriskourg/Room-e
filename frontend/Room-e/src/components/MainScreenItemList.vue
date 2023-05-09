@@ -3,7 +3,7 @@ import MainScreenItem from './MainScreenItem.vue';
 import skeletonComponent from './common/skeletonComponent.vue';
 import skeletonsComponent from './common/SkeletonsComponent.vue';
 import getRooms from '../api/get-rooms';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useRoomStore } from '../stores/rooms';
 
 const roomStore = useRoomStore();
@@ -41,6 +41,15 @@ const handleScroll = async () => {
     await loadMore();
   }
 };
+
+const unwatch = watch(() => roomStore.filteredRooms, async () => {
+  if(roomStore.isLastPage){
+    unwatch();
+    return;
+  }
+  if(roomStore.filteredRooms.length > 0) return;
+  await loadMore();
+});
 
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll);

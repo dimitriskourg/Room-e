@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('fonts/sofiapro-light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  html {
+    font-family: "Sofia Pro", system-ui, sans-serif;
+  }
+}

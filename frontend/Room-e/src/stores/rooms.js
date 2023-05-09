@@ -44,11 +44,11 @@ export const useRoomStore = defineStore('room',() => {
   return rooms.filter(room => room.name.toLowerCase().includes(searchedRoomInput.value.toLowerCase()));
 };
 
-  const filterRoomsBySelectedDates = (rooms) => {
+  const filterRoomsBySelectedDates = async (rooms) => {
     if(selectedDates.value.length === 0) return rooms.value;
     const fromDate = selectedDates.value[0];
     const toDate = selectedDates.value[1];
-    const filteredReservations = getFilteredReservations(fromDate, toDate);
+    const filteredReservations = await getFilteredReservations(fromDate, toDate);
     const bookedRooms = filteredReservations.map(reservation => reservation.rooms);
   }
 
@@ -60,7 +60,7 @@ export const useRoomStore = defineStore('room',() => {
 
   const filteredRooms = computed(() => {
     //intersection of all filters
-    return filterRoomsBySearchedInput(rooms.value);
+    return filterRoomsBySelectedCategories(filterRoomsBySearchedInput(rooms.value));
   });
 
   return {

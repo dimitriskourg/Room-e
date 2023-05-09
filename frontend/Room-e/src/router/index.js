@@ -4,6 +4,7 @@ import Home from '../views/HomeView.vue'
 import SignInView from '../views/SignInView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import RoomView from '../views/RoomView.vue'
+import ReviewsView from '../views/ReviewsView.vue'
 import { useLocalStorage } from '@vueuse/core'
 
 const router = createRouter({
@@ -43,6 +44,11 @@ const router = createRouter({
       path: '/room/:id',
       name: 'Room',
       component: RoomView,
+    },
+    {
+      path: '/reviews/:id',
+      name: 'Reviews',
+      component: ReviewsView,
     },
     // {
     //   path: '/feed',
