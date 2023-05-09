@@ -63,14 +63,16 @@ onUnmounted(async() => {
 
 <template>
   <div>
-    <skeletonsComponent v-if="!roomStore.rooms.length"/>
-    <div class="flex flex-wrap my-5 mx-7 md:mx-14 lg:mx-28 2xl:mx-72 3xl:mx-96" ref="scrollComponent">
-      <MainScreenItem v-for="room in roomStore.filteredRooms" :key="room.id" :id="room.id" :name="room.name" :category="room.category" :photo="room.photo"/>
-    </div>
-    <skeletonComponent v-if="roomStore.isLoading" />
-    <!-- No more rooms available  -->
-    <div v-if="roomStore.isLastPage" class="flex justify-center items-center text-gray-500 text-sm py-4">
-      No more rooms available
+    <skeletonsComponent v-if="!roomStore.rooms.length || roomStore.everythingLoading"/>
+    <div v-if="!roomStore.everythingLoading">
+      <div class="flex flex-wrap my-5 mx-7 md:mx-14 lg:mx-28 2xl:mx-72 3xl:mx-96" ref="scrollComponent">
+        <MainScreenItem v-for="room in roomStore.filteredRooms" :key="room.id" :id="room.id" :name="room.name" :category="room.category" :photo="room.photo"/>
+      </div>
+      <skeletonComponent v-if="roomStore.isLoading" />
+      <!-- No more rooms available  -->
+      <div v-if="roomStore.isLastPage" class="flex justify-center items-center text-gray-500 text-sm py-4">
+        No more rooms available
+      </div>
     </div>
   </div>
 </template>

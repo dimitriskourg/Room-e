@@ -1,7 +1,7 @@
 <template>
   <section class="text-gray-400 bg-gray-900 body-font">
     <div class="container px-5 py-24 mx-auto">
-      <div class="xl:w-4/5 mx-auto flex flex-wrap">
+      <div class="xl:w-4/5 mx-auto flex flex-wrap" v-if="roomLoaded">
         <img alt="room Image" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" :src="getImgUrl">
         <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 class="text-sm title-font text-gray-500 tracking-widest">{{room.category}} | {{ room.capacity }} guests</h2>
@@ -79,6 +79,8 @@
     return "https://dummyimage.com/1203x503"
   })
 
+  const roomLoaded = ref(false);
+
   const formatter = {
   date: 'DD MMM',
   month: 'MMM',
@@ -135,6 +137,7 @@ const startFrom = new Date()
     const { totalReviews, totalStars} = await getRoomsNumberOfReviews(id)
     NumberOfReviews.value = totalReviews;
     totalRating.value = totalStars;
+    roomLoaded.value = true;
   });
 </script>
 
