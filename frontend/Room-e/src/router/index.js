@@ -5,7 +5,9 @@ import SignInView from '../views/SignInView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import RoomView from '../views/RoomView.vue'
 import ReviewsView from '../views/ReviewsView.vue'
+import AdminView from '../views/AdminView.vue'
 import { useLocalStorage } from '@vueuse/core'
+import { useUserStore } from '@/stores/user';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +48,13 @@ const router = createRouter({
       component: RoomView,
     },
     {
+      path: '/admin',
+      name: 'Admin',
+      component: AdminView,
+      meta: { requiresAuth: true,
+              requiresAdmin: true },
+    },
+    {
       path: '/reviews/:id',
       name: 'Reviews',
       component: ReviewsView,
@@ -71,11 +80,19 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
+  const userStore = useUserStore();
   // Init the store within the beforeEach function as per the documentation:
   // https://pinia.vuejs.org/core-concepts/outside-component-usage.html#single-page-applications
   if (to.meta.requiresAuth && !client?.authStore.token) {
     return {
       path: "/signin"
+    }
+  }
+  if (to.meta.requiresAdmin && userStore.type !== "administrators") {
+    console.log("Not an admin");
+    console.log(userStore.type);
+    return {
+      path: "/"
     }
   }
   document.title = `${to.name} | Room-e`

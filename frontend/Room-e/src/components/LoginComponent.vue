@@ -22,6 +22,7 @@ const authUser = async () => {
     try {
         // Authenticate the user via email and password
         console.log("the data are: " , email.value, password.value);
+        //try to login either as a user or as a administrator
         const userData = await pocketBase.collection("users").authWithPassword(email.value, password.value);
 
         if (userData) {
@@ -33,8 +34,21 @@ const authUser = async () => {
             router.push({ path: "/rooms" })
         }
     } catch (error) {
-        console.log(error);
-        displayError.value = true;
+        try {
+        const userData = await pocketBase.collection("administrators").authWithPassword(email.value, password.value);
+
+        if (userData) {
+        console.log(userData);
+        userStore.userID = userData.record?.id;
+        userStore.userName = userData.record?.username;
+        userStore.type = userData.record?.collectionName;
+        console.log("the user is: ", pocketBase?.authStore.token);
+        router.push({ path: "/admin" })
+        }
+        } catch (error) {
+            console.log(error);
+            displayError.value = true;
+        }
     }
 }
 </script>

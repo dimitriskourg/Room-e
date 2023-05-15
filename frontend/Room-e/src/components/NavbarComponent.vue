@@ -69,9 +69,9 @@ onUnmounted(() => {
         <span class="ml-3 text-xl">Room-e</span>
       </router-link>
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        <router-link to="/rooms" v-if="isLogged && isAdmin" class="mr-5 hover:pink-500 hover:cursor-pointer">View All Rooms</router-link>
+        <router-link to="/admin/rooms" v-if="isLogged && isAdmin" class="mr-5 hover:pink-500 hover:cursor-pointer">View All Rooms</router-link>
         <router-link to="/rooms" v-if="!isAdmin" class="mr-5 hover:text-pink-500 hover:cursor-pointer">View All Available Rooms</router-link>
-        <router-link to="/" v-if="isLogged && isAdmin" class="mr-5 hover:text-pink-500 hover:cursor-pointer">View All Reservations</router-link>
+        <router-link to="/admin/reservations" v-if="isLogged && isAdmin" class="mr-5 hover:text-pink-500 hover:cursor-pointer">View All Reservations</router-link>
         <router-link to="/" v-if="isLogged && isUser" class="mr-5 hover:text-pink-500 hover:cursor-pointer">My Profile</router-link>
         <a @click="logout" v-if="isLogged" class="mr-5 hover:text-pink-500 hover:cursor-pointer">Sign out</a>
         <a @click="signIn" v-if="!isLogged" class="mr-5 hover:text-pink-500 hover:cursor-pointer">Sign in</a>
