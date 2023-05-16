@@ -1,16 +1,10 @@
 <script setup>
-  import { useUserStore } from '@/stores/user';
   import { inject, ref } from 'vue';
-  import { useRouter } from 'vue-router';
+  import NotificationComponent from '../components/common/NotificationComponent.vue';
+
 
 // Inject the PocketBase client
 const pocketBase = inject("PBClient");
-
-// Init the store
-const userStore = useUserStore();
-
-// Router composable
-const router = useRouter();
 
 // Local reactive variables
 const email = ref("");
@@ -19,25 +13,63 @@ const confirmPassword = ref("");
 const username = ref("");
 const firstName = ref("");
 const lastName = ref("");
-const displayError = ref(false);
+const displayNotification = ref(false);
+const notificationMessage = ref("");
+const notificationType = ref("");
 
 // Function to authenticate the user based on email and password
 const signUser = async () => {
     try {
-        // Authenticate the user via email and password
-        const userData = await pocketBase.collection("users").authWithPassword(email.value, password.value);
+        //check if the password and the confirm password are the same
+        if(password.value != confirmPassword.value){
+            displayNotification.value = true;
+            notificationType.value = "error";
+            notificationMessage.value = "The passwords are not the same.";
+            return;
+        }
 
-        if (userData) {
-            console.log(userData);
-            userStore.userID = userData.record?.id;
-            userStore.userName = userData.record?.username;
-            userStore.type = userData.record?.collectionName;
-            router.push({ path: "/dashboard" })
+        //check if one of the fields is empty
+        if(email.value == "" || password.value == "" || confirmPassword.value == "" || username.value == "" || firstName.value == "" || lastName.value == ""){
+            displayNotification.value = true;
+            notificationType.value = "error";
+            notificationMessage.value = "Please fill all the fields.";
+            return;
+        }
+
+        //check if the password is at least 8 characters long
+        if(password.value.length < 8){
+            displayNotification.value = true;
+            notificationType.value = "error";
+            notificationMessage.value = "The password must be at least 8 characters long.";
+            return;
+        }
+
+        const data = {
+            username: username.value,
+            email: email.value,
+            emailVisibility: true,
+            password: password.value,
+            passwordConfirm : confirmPassword.value,
+            fname: firstName.value,
+            lname: lastName.value,
+        }
+        // Authenticate the user via email and password
+        const record = await pocketBase.collection('users').create(data);
+
+        // (optional) send an email verification request
+        // await pocketBase.collection('users').requestVerification('test@example.com');
+
+        if (record) {
+            console.log(record);
+            displayNotification.value = true;
+            notificationType.value = "success";
+            notificationMessage.value = "You have successfully signed up. Please login to continue.";
         }
     } catch (error) {
-        console.log("sdas");
         console.log(error)
-        displayError.value = true;
+        displayNotification.value = true;
+        notificationType.value = "error";
+        notificationMessage.value = "Something went wrong. Please try again later.";
     }
 }
 </script>
@@ -74,13 +106,11 @@ const signUser = async () => {
                 </div>
                 <div class="relative mb-6">
                     <label for="confirm-password" class="leading-7 text-sm text-gray-400">Confirm Password</label>
-                    <input type="confirm-password" id="confirm-password" name="confirm-password" v-model="confirmPassword" class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-pink-900 rounded border border-gray-600 focus:border-pink-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="password" id="confirm-password" name="confirm-password" v-model="confirmPassword" class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-pink-900 rounded border border-gray-600 focus:border-pink-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 </div>
                 <button class="text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg" type="submit">Sign Up</button>
                 <p class="text-xs mt-3">Do you have an account? Please <router-link to="signup" class="text-pink-500">Sign in</router-link></p> 
-                <div v-if="displayError" class="mb-3">
-                    <p  class="text-red-500 text-xs mt-5">Something went wrong.</p>
-                </div>
+                <NotificationComponent v-if="displayNotification" :type="notificationType" class="mt-5" @close="displayNotification=false" >{{ notificationMessage }}</NotificationComponent>
                 </div>
             </div>
         </section>
