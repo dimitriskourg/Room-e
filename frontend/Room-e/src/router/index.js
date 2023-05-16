@@ -7,6 +7,7 @@ import RoomView from '../views/RoomView.vue'
 import ReviewsView from '../views/ReviewsView.vue'
 import AdminView from '../views/AdminView.vue'
 import AdminAllReservationsView from '../views/AdminAllReservationsView.vue'
+import UserAllReservationsView from '../views/UserAllReservationsView.vue'
 import { useLocalStorage } from '@vueuse/core'
 import { useUserStore } from '@/stores/user';
 
@@ -61,6 +62,12 @@ const router = createRouter({
       component: AdminAllReservationsView,
       meta: { requiresAuth: true,
               requiresAdmin: true },
+    },
+    {
+      path: '/user/reservations',
+      name: 'My Reservations',
+      component: UserAllReservationsView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/reviews/:id',

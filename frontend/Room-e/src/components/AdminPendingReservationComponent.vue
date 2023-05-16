@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="lg:mx-72 md:mx-36 mx-5 my-5 rounded-md bg-gray-800 p-5">
+    <div class="lg:mx-72 md:mx-36 mx-5 my-5 rounded-md bg-gray-800 p-10">
       <div class="flex flex-col">
         <div class=" flex flex-row justify-center ">
           <div class="border-r-2 border-r-gray-500 pr-4">

@@ -3,7 +3,7 @@
     <AdminComponent/>
     <div class="text-center py-5 text-2xl" >View All Pending Reservations</div>
     <skeletonComponent v-if="!isReady"/>
-    <div v-else>
+    <div v-else class="mb-20">
       <AdminPendingReservationComponent v-for="reservation in pendingReservations" :key="reservation.id" :room-name="reservation.expand.room.name" :reservation-dates="reservationDates(reservation)" :reservation-status="reservation.status" 
       :reservation-id="reservation.id" @update-reservation-status="updateStatus"/>
       

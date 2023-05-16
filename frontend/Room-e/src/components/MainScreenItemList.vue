@@ -12,7 +12,7 @@ const scrollComponent = ref(null);
 const fetchRooms = async () => {
   //2 seconds delay
   roomStore.isLoading = true;
-  await new Promise(resolve => setTimeout(resolve, 200));
+  // await new Promise(resolve => setTimeout(resolve, 200));
   try {
     const newRooms = await getRooms(roomStore.page);
     roomStore.page += 1;
