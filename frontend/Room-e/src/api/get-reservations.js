@@ -11,6 +11,6 @@ export const getFilteredReservations = async (fromDate , toDate) => {
 
   console.log("Dimitris filters final: ", fromDateFormattedDate, toDateFormattedDate);
   return await client.collection('reservations').getFullList({
-      filter: `(fromDate<='${fromDateFormattedDate}' && toDate >= "${toDateFormattedDate}") || (fromDate ~ '${fromDateFormattedDate}' && toDate ~ "${toDateFormattedDate}") || (fromDate ~ '${fromDateFormattedDate}' && toDate >= "${toDateFormattedDate}") || (fromDate<='${fromDateFormattedDate}' && toDate ~ "${toDateFormattedDate}") && status != "cancelled"`
+      filter: `((fromDate<='${fromDateFormattedDate}' && toDate >= "${toDateFormattedDate}") || (fromDate ~ '${fromDateFormattedDate}' && toDate ~ "${toDateFormattedDate}") || (fromDate ~ '${fromDateFormattedDate}' && toDate >= "${toDateFormattedDate}") || (fromDate<='${fromDateFormattedDate}' && toDate ~ "${toDateFormattedDate}")) && status != "cancelled"`
   });
 }
