@@ -6,6 +6,7 @@ import SignUpView from '../views/SignUpView.vue'
 import RoomView from '../views/RoomView.vue'
 import ReviewsView from '../views/ReviewsView.vue'
 import AdminView from '../views/AdminView.vue'
+import AdminAllReservationsView from '../views/AdminAllReservationsView.vue'
 import { useLocalStorage } from '@vueuse/core'
 import { useUserStore } from '@/stores/user';
 
@@ -55,6 +56,13 @@ const router = createRouter({
               requiresAdmin: true },
     },
     {
+      path: '/admin/reservations',
+      name: 'Admin Reservations',
+      component: AdminAllReservationsView,
+      meta: { requiresAuth: true,
+              requiresAdmin: true },
+    },
+    {
       path: '/reviews/:id',
       name: 'Reviews',
       component: ReviewsView,
@@ -93,6 +101,16 @@ router.beforeEach((to) => {
     console.log(userStore.type);
     return {
       path: "/"
+    }
+  }
+  //check if the path is /
+  if (to.path === '/') {
+    //check if the user is admin
+    if (userStore.type === "administrators") {
+      //redirect to admin page
+      return {
+        path: "/admin"
+      }
     }
   }
   document.title = `${to.name} | Room-e`

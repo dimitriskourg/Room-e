@@ -6,7 +6,7 @@ import ButtonComponent from './common/ButtonComponent.vue';
 
 const clickHandler = () => {
   console.log('clicked');
-  router.push({ name: 'home' })
+  router.push('/')
   // console.log(test);
 }
 
