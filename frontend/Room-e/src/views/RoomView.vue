@@ -103,8 +103,8 @@ const startFrom = new Date()
     const fromDateFormattedDate = new Date(` 08:00 ${selectedDates.value[0]} ${currentYear}`).toISOString();
     const toDateFormattedDate = new Date(`23:59 ${selectedDates.value[1]} ${currentYear}`).toISOString();
     const data = {
-    "fromDate": fromDateFormattedDate,
-    "toDate": toDateFormattedDate,
+    "fromDate": fromDateFormattedDate.split("T")[0] + " 00:00:00.000Z", 
+    "toDate": toDateFormattedDate.split("T")[0] + " 23:59:00.000Z",
     "purpose": "general",
     "status": "pending",
     "room": [
