@@ -3,7 +3,7 @@ import client from '@/pocketbase'
 
 
 export const getRooms = async (last) => {
-  const rooms = await client.collection('rooms').getList(last, 10);
+  const rooms = await client.collection('rooms').getList(last, 100);
   return rooms;
 }
 

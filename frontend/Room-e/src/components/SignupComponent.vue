@@ -64,6 +64,12 @@ const signUser = async () => {
             displayNotification.value = true;
             notificationType.value = "success";
             notificationMessage.value = "You have successfully signed up. Please login to continue.";
+            email.value = "";
+            password.value = "";
+            confirmPassword.value = "";
+            username.value = "";
+            firstName.value = "";
+            lastName.value = "";
         }
     } catch (error) {
         console.log(error)
